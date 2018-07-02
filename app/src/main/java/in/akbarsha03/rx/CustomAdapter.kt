@@ -14,15 +14,16 @@ class CustomAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var list: ArrayList<String>
 
     init {
-        Flowable.range(0, 30)
+        Flowable.range(0, 50)
                 .doOnSubscribe { list = ArrayList() }
-                .doOnNext { list.add("Item $it") }
+                .doOnNext { list.add("$it") }
                 .subscribe({}, { Log.e("TAG", it.message, it) },
                         { Log.d("TAG", "Generated ${list.size} items") })
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            CustomViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false))
+            CustomViewHolder(LayoutInflater.from(parent.context)
+                    .inflate(R.layout.list_item, parent, false))
 
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
